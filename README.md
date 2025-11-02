@@ -48,7 +48,7 @@ pip install -r requirements.txt
 4. Create a .env file in the project root and add your credentials:
 
 ```
-DATABASE_URL=postgresql://user:password@host:port/dbname
+DB_URL=postgresql://user:password@host:port/dbname
 TWITTER_CONSUMER_KEY=your_consumer_key
 TWITTER_CONSUMER_SECRET=your_consumer_secret
 TWITTER_ACCESS_TOKEN=your_access_token

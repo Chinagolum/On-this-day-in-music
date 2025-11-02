@@ -14,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -60,6 +59,7 @@ env/
 ENV/
 env.bak/
 venv.bak/
+.venv/
 
 # mypy
 .mypy_cache/
@@ -85,3 +85,20 @@ selenium_logs/
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.auto.tfvars
+crash.log
+
+# Optionally ignore lock file (keep if you want reproducible provider versions)
+#.terraform.lock.hcl
+
+# Local overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
