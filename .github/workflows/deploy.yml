@@ -1,0 +1,50 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Bundle Dependencies
+        run: |
+          mkdir -p build/package
+          pip install \
+            --platform manylinux2014_x86_64 \
+            --target build/package \
+            --implementation cp \
+            --python-version 3.12 \
+            --only-binary=:all: \
+            psycopg2-binary
+          
+          cp lambdas/daily_tweet_scheduler/schedule_tweets.py build/package/
+          cp -r lib build/package/
+
+      - name: Zip and Upload
+        run: |
+          cd build/package
+          zip -r ../../deploy.zip .
+          cd ../..
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Push to AWS
+        run: |
+          aws lambda update-function-code \
+            --function-name schedule-tweets \
+            --zip-file fileb://deploy.zip
