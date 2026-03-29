@@ -1,0 +1,7 @@
+selenium>=4.36.0,<5
+requests>=2.32.5,<3
+boto3>=1.40.59,<2
+beautifulsoup4
+lxml
+python-dotenv
+openai

@@ -1,104 +1,106 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# dotenv environment variables file
+# === CRITICAL SECRETS (NEVER COMMIT) ===
+# Environment variables with ALL credentials
 .env
+.env.local
+.env.*.local
 
-# virtual environment folder
+# Terraform secrets
+terraform.tfvars
+*.auto.tfvars
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# AWS credentials in config files
+cloudwatch-datasource.json
+telegram-contact.json
+alert-*.json
+dashboard.json
+
+# Lambda responses (may contain DB data)
+response.json
+
+# === BUILD ARTIFACTS (Contain dependencies) ===
+# Virtual environments
 venv/
 env/
+.venv/
 ENV/
 env.bak/
 venv.bak/
-.venv/
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Python compiled
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
 
-# Pyre type checker
-.pyre/
+# Lambda deployment packages
+*.zip
+build/
+package/
+dist/
 
-# VS Code settings
+# Terraform providers
+.terraform/
+
+# Test coverage
+.coverage
+.coverage.*
+.pytest_cache/
+htmlcov/
+
+# === SYSTEM FILES ===
+.DS_Store
 .vscode/
-
-# Logs
+.idea/
 *.log
 
-# macOS
-.DS_Store
-
-# Selenium webdriver logs or cache if any
+# Selenium logs
 selenium_logs/
 
-# Any other IDE/editor specific files
-.idea/
-*.sublime-project
-*.sublime-workspace
+# === TEMPORARY FILES ===
+*.tmp
+*.bak
+temp/
+tmp/
 
-# --- Terraform ---
-.terraform/
-*.tfstate
-*.tfstate.*
-*.tfvars
-*.auto.tfvars
+# Terraform crash logs
 crash.log
 
-# Optionally ignore lock file (keep if you want reproducible provider versions)
-#.terraform.lock.hcl
+# === BLOAT PREVENTION ===
+# Large data files
+*.csv
+*.json
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
 
-# Local overrides
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+# Except these specific files (override with !)
+!terraform/*.json
+!package.json
+!tsconfig.json
+
+# Screenshots/images (unless in docs/)
+*.png
+*.jpg
+*.jpeg
+*.gif
+!docs/**/*.png
+!docs/**/*.jpg
+
+# Video files
+*.mp4
+*.mov
+*.avi
+
+# Archives
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Node modules (if you ever add JS)
+node_modules/

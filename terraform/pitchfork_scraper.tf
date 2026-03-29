@@ -62,7 +62,9 @@ resource "aws_ecs_task_definition" "scraper_task" {
         { name = "AWS_SECRET_ACCESS_KEY", value = var.AWS_SECRET_ACCESS_KEY },
         { name = "AWS_REGION", value = var.AWS_REGION },
         { name = "DB_URL", value = var.DB_URL },
-        { name = "OPENAI_API_KEY", value = var.OPENAI_API_KEY }
+        { name = "OPENAI_API_KEY", value = var.OPENAI_API_KEY },
+        { name = "AWS_BUCKET", value = var.AWS_BUCKET},
+        
       ]
       logConfiguration = {
         logDriver = "awslogs"
@@ -87,12 +89,8 @@ resource "aws_ecs_service" "scraper_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [
-      "subnet-0f874925280d7ab87",
-      "subnet-07b175f417cde11fe",
-      "subnet-0def9191edb50a5b4"
-    ]
-    security_groups = ["sg-084414d119bb32825"]
-    assign_public_ip = true
+    subnets          = var.subnets          # [cite: 20, 25]
+    security_groups  = [var.security_group] # [cite: 20, 25]
+    assign_public_ip = true                 # [cite: 20]
   }
 }

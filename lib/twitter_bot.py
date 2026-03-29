@@ -15,6 +15,8 @@ class TwitterBot:
         try:
             year_diff = datetime.datetime.now().year - int(release_date[:4])
             message = f"On this day {year_diff} years ago, {artist} released \"{album}\" ({release_date}) 🎶"
-            self.client.create_tweet(text=message)
+            response = self.client.create_tweet(text=message)
+            return f"Tweet posted: {response.data['id']}" 
         except Exception as e:
             print(f"Error posting tweet: {e}")
+            raise 

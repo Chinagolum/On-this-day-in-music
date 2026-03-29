@@ -3,10 +3,14 @@
 # ------------------------------------------------------------
 
 import os
-from dotenv import load_dotenv
 
 # Reads key-value pairs from the .env file into environment variables
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # This happens on Lambda where we don't need/have dotenv
+    pass
 
 
 # ------------------------------------------------------------

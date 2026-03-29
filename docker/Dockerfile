@@ -12,6 +12,9 @@ RUN apt-get update && \
 # Create app folder
 WORKDIR /app
 
+# Copy requirements FIRST (for better Docker layer caching)
+COPY requirements-scraper.txt ./
+
 # Copy your Python code
 COPY lib/ ./lib/
 
@@ -22,11 +25,12 @@ RUN python3 -m venv /opt/venv
 RUN /opt/venv/bin/pip install --upgrade pip
 
 # Install your requirements inside the virtual environment
-RUN /opt/venv/bin/pip install --no-cache-dir -r lib/requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir -r requirements-scraper.txt
 
 # Ensure Python uses the virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1   
 
 # Run the scraper module
 CMD ["python3", "-m", "lib.pitchfork_scraper"]

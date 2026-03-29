@@ -2,10 +2,6 @@ output "tweet_queue_url" {
   value = aws_sqs_queue.tweet_queue.id
 }
 
-output "create_tweet_lambda_arn" {
-  value = aws_lambda_function.create_tweet.arn
-}
-
 output "schedule_tweets_lambda_arn" {
   value = aws_lambda_function.schedule_tweets.arn
 }
