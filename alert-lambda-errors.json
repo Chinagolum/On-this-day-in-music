@@ -1,0 +1,65 @@
+{
+  "uid": "lambda-errors-alert",
+  "title": "Lambda Errors Detected",
+  "condition": "C",
+  "data": [
+    {
+      "refId": "A",
+      "queryType": "cloudwatch",
+      "model": {
+        "namespace": "OnThisDayInMusic",
+        "metricName": "Errors",
+        "statistic": "Sum",
+        "region": "eu-north-1",
+        "dimensions": {}
+      },
+      "relativeTimeRange": {
+        "from": 300,
+        "to": 0
+      },
+      "datasourceUid": "bfhhyaiqn1ukge"
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [0],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": ["A"]
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "A",
+        "reducer": "last",
+        "type": "classic_conditions"
+      }
+    }
+  ],
+  "noDataState": "NoData",
+  "execErrState": "Error",
+  "for": "5m",
+  "annotations": {
+    "description": "🚨 Lambda errors detected!",
+    "summary": "Lambda Errors"
+  },
+  "labels": {
+    "severity": "critical"
+  },
+  "folderUID": "efhi0xuyrwjy8b",
+  "ruleGroup": "OnThisDayInMusic",
+  "intervalSeconds": 60,
+  "isPaused": false
+}

@@ -41,6 +41,15 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Resource = [
           aws_sqs_queue.tweet_queue.arn
         ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.AWS_BUCKET}/*"
+        ]
       }
     ]
   })
