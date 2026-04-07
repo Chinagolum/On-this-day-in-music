@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": null,
+    "title": "On This Day in Music - Monitoring",
+    "tags": ["music", "twitter", "lambda"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 0,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+        "type": "stat",
+        "title": "Albums Queued Today",
+        "targets": [{
+          "datasource": {"type": "cloudwatch", "uid": "bfhhyaiqn1ukge"},
+          "namespace": "OnThisDayInMusic",
+          "metricName": "AlbumsQueued",
+          "statistic": "Sum",
+          "dimensions": {"Service": "ScheduleTweets"},
+          "region": "eu-north-1",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0},
+        "type": "stat",
+        "title": "Tweets Posted",
+        "targets": [{
+          "datasource": {"type": "cloudwatch", "uid": "bfhhyaiqn1ukge"},
+          "namespace": "OnThisDayInMusic",
+          "metricName": "TweetsPosted",
+          "statistic": "Sum",
+          "dimensions": {"Service": "TwitterBot"},
+          "region": "eu-north-1",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "type": "timeseries",
+        "title": "Errors Over Time",
+        "targets": [{
+          "datasource": {"type": "cloudwatch", "uid": "bfhhyaiqn1ukge"},
+          "namespace": "OnThisDayInMusic",
+          "metricName": "Errors",
+          "statistic": "Sum",
+          "region": "eu-north-1",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "timeseries",
+        "title": "Lambda Duration",
+        "targets": [{
+          "datasource": {"type": "cloudwatch", "uid": "bfhhyaiqn1ukge"},
+          "namespace": "AWS/Lambda",
+          "metricName": "Duration",
+          "statistic": "Average",
+          "dimensions": {"FunctionName": "schedule-tweets"},
+          "region": "eu-north-1",
+          "refId": "A"
+        }]
+      }
+    ]
+  },
+  "overwrite": false
+}

@@ -1,0 +1,63 @@
+{
+  "uid": "no-tweets-alert",
+  "title": "No Tweets Posted Today",
+  "condition": "C",
+  "data": [
+    {
+      "refId": "A",
+      "queryType": "cloudwatch",
+      "model": {
+        "namespace": "OnThisDayInMusic",
+        "metricName": "TweetsPosted",
+        "statistic": "Sum",
+        "region": "eu-north-1",
+        "dimensions": {"Service": "TwitterBot"}
+      },
+      "relativeTimeRange": {
+        "from": 86400,
+        "to": 0
+      },
+      "datasourceUid": "bfhhyaiqn1ukge"
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [1],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": ["A"]
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "A",
+        "reducer": "last",
+        "type": "classic_conditions"
+      }
+    }
+  ],
+  "noDataState": "Alerting",
+  "execErrState": "Error",
+  "for": "30m",
+  "annotations": {
+    "description": "⚠️ No tweets have been posted today!\n\nThe scheduler may have failed or found no albums.\n\nCheck Lambda logs.",
+    "summary": "No Tweets Posted"
+  },
+  "labels": {
+    "severity": "warning"
+  },
+  "folderUID": "",
+  "isPaused": false
+}

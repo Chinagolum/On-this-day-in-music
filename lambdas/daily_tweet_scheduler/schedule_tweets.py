@@ -5,13 +5,12 @@ from aws_embedded_metrics import metric_scope
 @metric_scope
 def lambda_handler(event, context, metrics):
     """
-    Called by EventBridge daily. Sends album events to SQS.
+    Called by EventBridge daily. Purges stale messages, then queues today's albums.
     """
     import boto3
     import json
     import os
 
-    # Set custom metrics namespace
     metrics.set_namespace("OnThisDayInMusic")
     metrics.set_dimensions({"Service": "ScheduleTweets"})
     metrics.put_metric("Invocations", 1, "Count")
@@ -20,20 +19,28 @@ def lambda_handler(event, context, metrics):
     queue_url = os.environ["TWEET_QUEUE_URL"]
 
     try:
+        # Purge yesterday's leftovers
+        print("🧹 Purging stale messages...")
+        sqs.purge_queue(QueueUrl=queue_url)
+        print("✅ Queue purged")
+
         db = DatabaseManager()
         today = datetime.datetime.now().strftime("%Y-%m-%d")
         records = db.fetch_by_release_date(today)
         
         events = []
+        # Each record: (id, title, artist, genre, release_date, reviewer, review_date, image_url)
         for record in records:
             title = record[1]
             artist = record[2]
             release_date = record[4]
+            image_url = record[7]
 
             events.append({
                 "artist": artist,
                 "album": title,
-                "release_date": release_date.strftime("%Y-%m-%d") if release_date else None
+                "release_date": release_date.strftime("%Y-%m-%d") if release_date else None,
+                "image_url": image_url
             })
 
         db.close()
@@ -45,7 +52,6 @@ def lambda_handler(event, context, metrics):
                 MessageBody=json.dumps(album_event)
             )
         
-        # Metrics
         metrics.put_metric("AlbumsQueued", len(events), "Count")
         metrics.put_metric("Success", 1, "Count")
         

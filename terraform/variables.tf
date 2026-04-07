@@ -65,3 +65,9 @@ variable "TWITTER_ACCESS_TOKEN" {
   type        = string
   sensitive   = true
 }
+
+variable "GROQ_API_KEY" {
+  description = "Groq API key for AI verification"
+  type        = string
+  sensitive   = true
+}

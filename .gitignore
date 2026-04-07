@@ -1,51 +1,40 @@
-# === CRITICAL SECRETS (NEVER COMMIT) ===
-# Environment variables with ALL credentials
+# === SECRETS ===
 .env
 .env.local
 .env.*.local
-
-# Terraform secrets
 terraform.tfvars
 *.auto.tfvars
-*.tfstate
-*.tfstate.*
-*.tfstate.backup
-
-# AWS credentials in config files
 cloudwatch-datasource.json
 telegram-contact.json
-alert-*.json
 dashboard.json
 
-# Lambda responses (may contain DB data)
-response.json
+# === TERRAFORM STATE ===
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+!.terraform.lock.hcl
 
-# === BUILD ARTIFACTS (Contain dependencies) ===
-# Virtual environments
+# === BUILD ARTIFACTS ===
+build/
+*.zip
+
+# === DEBUG / OUTPUT FILES ===
+response.json
+output.json
+test_output.json
+pdfs.pdf
+
+# === PYTHON ===
 venv/
 env/
 .venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Python compiled
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 *.py[cod]
 
-# Lambda deployment packages
-*.zip
-build/
-package/
-dist/
-
-# Terraform providers
-.terraform/
-
-# Test coverage
+# === TESTS ===
 .coverage
 .coverage.*
 .pytest_cache/
@@ -56,51 +45,21 @@ htmlcov/
 .vscode/
 .idea/
 *.log
-
-# Selenium logs
-selenium_logs/
-
-# === TEMPORARY FILES ===
 *.tmp
 *.bak
-temp/
-tmp/
+selenium_logs/
 
-# Terraform crash logs
-crash.log
-
-# === BLOAT PREVENTION ===
-# Large data files
+# === LARGE FILES ===
 *.csv
-*.json
 *.xlsx
 *.db
 *.sqlite
 *.sqlite3
-
-# Except these specific files (override with !)
-!terraform/*.json
-!package.json
-!tsconfig.json
-
-# Screenshots/images (unless in docs/)
-*.png
-*.jpg
-*.jpeg
-*.gif
-!docs/**/*.png
-!docs/**/*.jpg
-
-# Video files
 *.mp4
 *.mov
 *.avi
-
-# Archives
 *.tar
 *.tar.gz
 *.rar
 *.7z
-
-# Node modules (if you ever add JS)
 node_modules/
